@@ -1,0 +1,1 @@
+{"name":"wikipedia-tree","version":"1.0.0","private":true,"type":"module","description":"A growing interactive tree of popular Wikipedia articles and their hyperlinks","scripts":{"dev":"node server.mjs","build":"node build.mjs","test":"node --test tests/*.test.js"},"engines":{"node":">=20"}}

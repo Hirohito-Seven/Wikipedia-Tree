@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore Wikipedia's most popular articles as an interactive, growing tree of real article links.">
+  <meta name="theme-color" content="#10131e">
+  <title>Wikipedia Tree</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="./" aria-label="Wikipedia Tree home"><span class="brand-mark" aria-hidden="true">W<span>↟</span></span><span>Wikipedia <em>Tree</em><small>A living map of knowledge</small></span></a>
+    <div class="header-note"><span class="source-mark">EN</span><span>English Wikipedia<small id="ranking-date">Daily popularity · live API</small></span></div>
+    <div class="header-stats" aria-label="Tree statistics"><div><strong id="node-count">0</strong><span>articles</span></div><div><strong id="edge-count">0</strong><span>hyperlinks</span></div><div><strong id="branch-count">0</strong><span>components</span></div></div>
+  </header>
+  <main class="workspace">
+    <aside class="sidebar">
+      <section class="configuration" aria-labelledby="configure-title">
+        <div class="eyebrow">01 / GROW YOUR TREE</div>
+        <h1 id="configure-title">Start with curiosity.</h1>
+        <p class="intro">Follow the links between Wikipedia’s most-read articles. Watch connections emerge, one article at a time.</p>
+        <form id="grow-form">
+          <label for="article-limit">Articles to process</label>
+          <div class="number-wrap"><input id="article-limit" name="articles" type="number" min="1" max="1000" step="1" value="100" required><span>articles</span></div>
+          <p class="input-note" id="limit-note">1–1,000 · from the latest daily ranking</p>
+          <button class="primary" id="start-button" type="submit"><span aria-hidden="true">✦</span> Grow tree</button>
+        </form>
+        <div class="run-controls"><button id="pause-button" disabled>Pause</button><button id="stop-button" disabled>Stop</button><button id="reset-button" disabled>Reset</button></div>
+        <div class="run-progress"><div class="progress-heading"><span id="run-label">Ready to explore</span><span id="run-count">0 / 100</span></div><progress id="progress" value="0" max="100" aria-label="Articles processed"></progress><p id="status" role="status" aria-live="polite">Choose a count, then grow your tree.</p><p id="error" class="error" role="alert" hidden></p></div>
+      </section>
+      <section class="article-section" aria-labelledby="articles-title"><div class="section-heading"><h2 id="articles-title">Processed articles</h2><span id="list-count">0</span></div><p id="article-empty" class="muted">Your discoveries will appear here.</p><ol id="article-list" class="article-list" aria-label="Processed articles, in popularity order"></ol></section>
+      <details class="method"><summary>How the connections work</summary><p>Articles are processed in descending pageview order. A solid line represents an actual Wikipedia hyperlink. A tree uses one connection per branch; the remaining links are cross-links.</p><p>Disconnected groups sit around a shared display center. Dotted spokes are layout guides, not article links. Groups can join when a new article connects them.</p><p>Links include article links supplied by Wikipedia, including links in navigation templates. Topic colors are estimates based on visible categories.</p><p>Rankings cover a single UTC day. Wikimedia provides up to 1,000 ranked pages; non-article pages, duplicates and disambiguation pages are skipped, so fewer articles may be available.</p></details>
+    </aside>
+    <section class="map" aria-label="Interactive Wikipedia tree">
+      <div class="map-toolbar"><div class="map-heading"><span class="eyebrow">02 / EXPLORE CONNECTIONS</span><h2>The knowledge tree</h2></div><div class="map-options"><label class="cross-toggle"><input type="checkbox" id="cross-links"> Cross-links</label><button id="fit-button" title="Fit all articles in view">Fit tree</button></div></div>
+      <div class="canvas-wrap" id="canvas-wrap"><canvas id="tree-canvas" tabindex="0" role="img" aria-label="Wikipedia article tree. Drag to pan, scroll to zoom. Use the processed articles list to select articles with the keyboard."></canvas><div class="map-empty" id="map-empty"><div class="empty-symbol" aria-hidden="true">W</div><h3>Every article is a beginning.</h3><p>Grow a tree to see where the links lead.</p><div class="empty-rule"></div><span>REAL ARTICLES. REAL CONNECTIONS.</span></div><div id="hover-label" class="hover-label" hidden></div><div class="zoom-controls"><button id="zoom-out" aria-label="Zoom out">−</button><output id="zoom-label" aria-label="Zoom level">100%</output><button id="zoom-in" aria-label="Zoom in">+</button></div><div class="canvas-hint">Drag to pan <span>·</span> Scroll to zoom <span>·</span> Click an article</div></div>
+      <div class="legend"><div><span class="legend-line"></span> Tree connection</div><div><span class="legend-line cross"></span> Cross-link</div><div><span class="legend-line guide"></span> Layout guide</div><div class="legend-topics"><span style="--topic:#a78bfa">People</span><span style="--topic:#62c9eb">Places</span><span style="--topic:#a8d780">Science</span><span style="--topic:#efad79">Culture</span><span style="--topic:#8192ab">Other</span></div></div>
+    </section>
+    <aside class="details-panel" id="details-panel" aria-labelledby="detail-title"><div class="eyebrow">03 / LOOK CLOSER</div><div id="detail-placeholder"><h2 id="detail-title">A world behind every node.</h2><p>Select an article in the tree or the list to read its introduction and discover its connections.</p><div class="detail-example"><span aria-hidden="true">↗</span><p>Larger nodes have more pageviews.<br>Colors hint at their subject.</p></div></div><article id="article-details" hidden></article><div class="source-footer">Built from Wikipedia & Wikimedia APIs.<br><a href="https://en.wikipedia.org/wiki/Wikipedia:Copyrights" target="_blank" rel="noopener noreferrer">Article text: CC BY-SA</a><br>Independent project. Not affiliated with Wikimedia.</div></aside>
+  </main>
+</body>
+</html>
